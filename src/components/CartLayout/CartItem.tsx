@@ -22,6 +22,25 @@ class CartItem extends Component<Props, State>{
         };
     }
 
+
+    increaseQuantity: ()=>void = () => {
+        this.setState((prevState: State)=> {
+            return {
+                qty: prevState.qty+1
+            }
+        })
+    }
+
+    decreaseQuantity: ()=>void = () => {
+        let {qty} = this.state;
+        if (qty === 0) return;
+        this.setState((prevState: State)=> {
+            return {
+                qty: prevState.qty-1
+            }
+        })
+    }
+
     render(){
         return (
             <div className="cart-item">
@@ -34,10 +53,25 @@ class CartItem extends Component<Props, State>{
                     <div style={{ color:'#777' }}>Qty: {this.state.qty}</div>
                     <div className="card-item-actions">
                         {/* Buttons */}
-                        <img src="https://image.flaticon.com/icons/svg/1828/1828919.svg" alt="increase" className="action-icons"/>
-                        <img src="https://image.flaticon.com/icons/svg/1828/1828899.svg" alt="decrease" className="action-icons"/>
-                        <img src="https://image.flaticon.com/icons/svg/709/709519.svg" alt="delete" className="action-icons"/>
-                    </div>
+                        <img 
+                            src="https://image.flaticon.com/icons/svg/1828/1828919.svg" 
+                            alt="increase" 
+                            className="action-icons"
+                            onClick={this.increaseQuantity.bind(this)}    
+                        />
+                        <img 
+                            src="https://image.flaticon.com/icons/svg/1828/1828899.svg" 
+                            alt="decrease" 
+                            className="action-icons"
+                            onClick={this.decreaseQuantity}    
+                        />
+                        <img 
+                            src="https://image.flaticon.com/icons/svg/709/709519.svg" 
+                            alt="increase" 
+                            className="action-icons"
+                            // onClick={this.increaseQuantity}    
+                        />
+                        </div>
                 </div>
             </div>
         )
