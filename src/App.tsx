@@ -1,10 +1,10 @@
 import React from 'react';
-import CartItem from './components/CartLayout/CartItem'
+import Cart from './components/CartLayout/Cart'
 
 function App() {
   return (
     <div className="App">
-        <CartItem/>
+        <Cart/>
     </div>
   );
 }
