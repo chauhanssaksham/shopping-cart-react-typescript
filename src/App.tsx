@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cart from './components/CartLayout/Cart'
 import Navbar from './components/Navbar/Navbar'
+import { threadId } from 'worker_threads';
 
 interface Props{
 
@@ -74,10 +75,19 @@ class App extends Component<{}, State> {
             products: products.filter(prod => product.id !== prod.id)
         })
     }
+    getCartCount = ():number =>{
+        const {products} = this.state;
+        let count = 0;
+        products.forEach(product => {
+            count+=product.qty
+        });
+        console.log(count);
+        return count;
+    }
   render(){
     return (
         <div className="App">
-            <Navbar/>
+            <Navbar count={this.getCartCount()}/>
             <Cart 
                 products={this.state.products} 
                 handleIncreaseQuantity={this.handleIncreaseQuantity}

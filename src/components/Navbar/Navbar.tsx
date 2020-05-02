@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 interface Props{
-
+    count: number
 }
 
 interface State{
@@ -17,7 +17,7 @@ class Navbar extends Component<Props, State>{
             <div style={styles.nav}>
                 <div style={styles.cartIconContainer}>
                     <img style={styles.cartIcon} src="https://image.flaticon.com/icons/svg/1170/1170627.svg" alt="cart-icon"/>
-                    <span style={styles.cartCount}>3</span>
+                    <span style={styles.cartCount}> {this.props.count} </span>
                 </div>
             </div>
         )
