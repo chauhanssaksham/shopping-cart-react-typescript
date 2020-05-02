@@ -87,7 +87,7 @@ class App extends Component<{}, State> {
         const {products} = this.state;
         let total = 0;
         products.forEach(product => {
-            total+=product.price
+            total+=(product.price)*(product.qty)
         });
         return total;
     }
