@@ -1,14 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 interface Props{
     product: Product,
     onIncreaseQuantity: (product: Product)=>void,
     onDecreaseQuantity: (product: Product)=>void,
     onDeleteItem: (product: Product)=>void
-}
-
-interface State{
-
 }
 
 interface Product{
@@ -20,43 +16,41 @@ interface Product{
 }
 
 
-class CartItem extends Component<Props, State>{
+const CartItem = (props: Props) => {
 
-    render(){
-        return (
-            <div className="cart-item">
-                <div className="left-block">
-                    <img alt="" style={styles.image}/>
-                </div>
-                <div className="right-block">
-                    <div style={{ fontSize:25 }}>{this.props.product.title}</div>
-                    <div style={{ color:'#777' }}>Rs {this.props.product.price}</div>
-                    <div style={{ color:'#777' }}>Qty: {this.props.product.qty}</div>
-                    <div className="card-item-actions">
-                        {/* Buttons */}
-                        <img 
-                            src="https://image.flaticon.com/icons/svg/1828/1828919.svg" 
-                            alt="increase" 
-                            className="action-icons"
-                            onClick={()=>this.props.onIncreaseQuantity(this.props.product)}    
-                        />
-                        <img 
-                            src="https://image.flaticon.com/icons/svg/1828/1828899.svg" 
-                            alt="decrease" 
-                            className="action-icons"
-                            onClick={()=>this.props.onDecreaseQuantity(this.props.product)}
-                        />
-                        <img 
-                            src="https://image.flaticon.com/icons/svg/709/709519.svg" 
-                            alt="increase" 
-                            className="action-icons"
-                            onClick={()=>this.props.onDeleteItem(this.props.product)}    
-                        />
-                        </div>
-                </div>
+    return (
+        <div className="cart-item">
+            <div className="left-block">
+                <img alt="" style={styles.image}/>
             </div>
-        )
-    }
+            <div className="right-block">
+                <div style={{ fontSize:25 }}>{props.product.title}</div>
+                <div style={{ color:'#777' }}>Rs {props.product.price}</div>
+                <div style={{ color:'#777' }}>Qty: {props.product.qty}</div>
+                <div className="card-item-actions">
+                    {/* Buttons */}
+                    <img 
+                        src="https://image.flaticon.com/icons/svg/1828/1828919.svg" 
+                        alt="increase" 
+                        className="action-icons"
+                        onClick={()=>props.onIncreaseQuantity(props.product)}    
+                    />
+                    <img 
+                        src="https://image.flaticon.com/icons/svg/1828/1828899.svg" 
+                        alt="decrease" 
+                        className="action-icons"
+                        onClick={()=>props.onDecreaseQuantity(props.product)}
+                    />
+                    <img 
+                        src="https://image.flaticon.com/icons/svg/709/709519.svg" 
+                        alt="increase" 
+                        className="action-icons"
+                        onClick={()=>props.onDeleteItem(props.product)}    
+                    />
+                    </div>
+            </div>
+        </div>
+    )
 }
 
 const styles: any = {
