@@ -28,21 +28,21 @@ class App extends Component<{}, State> {
                     price: 10000,
                     title: 'Phone',
                     qty: 1,
-                    img: '',
+                    img: 'https://images.unsplash.com/photo-1551721434-8b94ddff0e6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80',
                     id: 1
                 },
                 {
                     price: 20000,
                     title: 'Laptop',
                     qty: 1,
-                    img: '',
+                    img: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80',
                     id: 2
                 },
                 {
                     price: 999,
                     title: 'Blackberry',
                     qty: 1,
-                    img: '',
+                    img: 'https://images.unsplash.com/photo-1474480109237-15a7ca8f0685?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1953&q=80',
                     id: 3
                 }
             ]
@@ -81,9 +81,18 @@ class App extends Component<{}, State> {
         products.forEach(product => {
             count+=product.qty
         });
-        console.log(count);
         return count;
     }
+    getCartTotal = ():number => {
+        const {products} = this.state;
+        let total = 0;
+        products.forEach(product => {
+            total+=product.price
+        });
+        return total;
+    }
+
+
   render(){
     return (
         <div className="App">
@@ -94,6 +103,7 @@ class App extends Component<{}, State> {
                 handleDecreaseQuantity={this.handleDecreaseQuantity}
                 handleDeleteItem={this.handleDeleteItem}
             />
+            <div>Total: {this.getCartTotal()}</div>
         </div>
       );
   }
