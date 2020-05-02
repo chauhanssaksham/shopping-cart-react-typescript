@@ -49,10 +49,30 @@ class Cart extends Component<Props, State>{
     }
 
     handleIncreaseQuantity: (product:Product) => void = (product) => {
-        console.log("Pls inc qty of ", product);
+        // console.log("Pls inc qty of ", product);
+        let {products} = this.state;
+        const index:number = products.indexOf(product);
+        products[index].qty += 1;
+        this.setState({
+            products
+        })
     }
     handleDecreaseQuantity: (product:Product) => void = (product) => {
-        console.log("Pls dec qty of ", product);
+        // console.log("Pls dec qty of ", product);
+        let {products} = this.state;
+        const index:number = products.indexOf(product);
+        if (products[index].qty > 0){
+            products[index].qty -= 1;
+            this.setState({
+                products
+            })
+        }
+    }
+    handleDeleteItem: (product: Product) => void = (product) => {
+        let {products} = this.state;
+        this.setState({
+            products: products.filter(prod => product.id !== prod.id)
+        })
     }
 
     render(){
@@ -66,6 +86,7 @@ class Cart extends Component<Props, State>{
                             key={product.id} 
                             onIncreaseQuantity={this.handleIncreaseQuantity}
                             onDecreaseQuantity={this.handleDecreaseQuantity}
+                            onDeleteItem={this.handleDeleteItem}
                         />
                     )
                 })}

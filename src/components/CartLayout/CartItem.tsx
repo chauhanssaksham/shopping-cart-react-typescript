@@ -4,6 +4,7 @@ interface Props{
     product: Product,
     onIncreaseQuantity: (product: Product)=>void,
     onDecreaseQuantity: (product: Product)=>void,
+    onDeleteItem: (product: Product)=>void
 }
 
 interface State{
@@ -49,7 +50,7 @@ class CartItem extends Component<Props, State>{
                             src="https://image.flaticon.com/icons/svg/709/709519.svg" 
                             alt="increase" 
                             className="action-icons"
-                            // onClick={this.increaseQuantity}    
+                            onClick={()=>this.props.onDeleteItem(this.props.product)}    
                         />
                         </div>
                 </div>
