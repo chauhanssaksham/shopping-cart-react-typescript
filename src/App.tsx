@@ -83,19 +83,40 @@ class App extends Component<{}, State> {
         // console.log("Pls inc qty of ", product);
         let {products} = this.state;
         const index:number = products.indexOf(product);
-        products[index].qty += 1;
-        this.setState({
-            products
+        // products[index].qty += 1;
+        // this.setState({
+        //     products
+        // })
+        const docRef = 
+            firebase
+                .firestore()
+                .collection('products')
+                .doc(products[index].id);
+        docRef.update({
+            qty: products[index].qty+1
+        }).then(()=>{
+            console.log('Doc updated');
+        }).catch(err => {
+            console.log('ERROR in updating: ', err);
         })
+
     }
     handleDecreaseQuantity: (product:Product) => void = (product) => {
         // console.log("Pls dec qty of ", product);
         let {products} = this.state;
         const index:number = products.indexOf(product);
         if (products[index].qty > 0){
-            products[index].qty -= 1;
-            this.setState({
-                products
+            const docRef = 
+                firebase
+                    .firestore()
+                    .collection('products')
+                    .doc(products[index].id);
+            docRef.update({
+                qty: products[index].qty-1
+            }).then(()=>{
+                console.log('Doc updated');
+            }).catch(err => {
+                console.log('ERROR in updating: ', err);
             })
         }
     }
@@ -126,7 +147,7 @@ class App extends Component<{}, State> {
             .firestore()
             .collection('products')
             .add({
-                img: '',
+                img: 'https://www.lg.com/in/images/washing-machines/md06217536/gallery/01-Washing-Machines-1100.jpg',
                 price: 9999,
                 title: 'Washing Machine',
                 qty: 50
