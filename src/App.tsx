@@ -121,12 +121,29 @@ class App extends Component<{}, State> {
         });
         return total;
     }
-
+    addProduct= ():void => {
+        firebase
+            .firestore()
+            .collection('products')
+            .add({
+                img: '',
+                price: 9999,
+                title: 'Washing Machine',
+                qty: 50
+            })
+            .then((docRef) => {
+                console.log(docRef);
+            })
+            .catch(err => {
+                console.log('error:' , err);
+            });
+    }
 
   render(){
     return (
         <div className="App">
             <Navbar count={this.getCartCount()}/>
+            <button onClick={this.addProduct}>Add</button>
             <Cart 
                 products={this.state.products} 
                 handleIncreaseQuantity={this.handleIncreaseQuantity}
