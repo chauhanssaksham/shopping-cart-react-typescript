@@ -122,9 +122,27 @@ class App extends Component<{}, State> {
     }
     handleDeleteItem: (product: Product) => void = (product) => {
         let {products} = this.state;
-        this.setState({
-            products: products.filter(prod => product.id !== prod.id)
-        })
+        // this.setState({
+        //     products: products.filter(prod => product.id !== prod.id)
+        // })
+        const index:number = products.indexOf(product);
+        // products[index].qty += 1;
+        // this.setState({
+        //     products
+        // })
+        const docRef = 
+            firebase
+                .firestore()
+                .collection('products')
+                .doc(products[index].id);
+        docRef
+            .delete()
+            .then(()=>{
+                console.log('Deleted successfully');
+            })
+            .catch(err=>{
+                console.log('Error in deleteing: ', err);
+            });
     }
     getCartCount = ():number =>{
         const {products} = this.state;
