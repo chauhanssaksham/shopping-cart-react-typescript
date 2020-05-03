@@ -17,7 +17,7 @@ interface Product{
     title: string,
     qty: number,
     img: string,
-    id: number
+    id: string
 }
 
 class Cart extends Component<Props, State>{

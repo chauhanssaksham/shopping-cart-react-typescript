@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import Cart from './components/CartLayout/Cart'
 import Navbar from './components/Navbar/Navbar'
-import { threadId } from 'worker_threads';
+import * as firebase from 'firebase'
 
 interface Props{
 
 }
 
 interface State{
-    products: Product[]
+    products: Product[],
+    loading: boolean
 }
 
 interface Product{
@@ -16,37 +17,66 @@ interface Product{
     title: string,
     qty: number,
     img: string,
-    id: number
+    id: string
 }
 
 class App extends Component<{}, State> {
     constructor(props: Props){
         super(props);
         this.state = {
-            products: [
-                {
-                    price: 10000,
-                    title: 'Phone',
-                    qty: 1,
-                    img: 'https://images.unsplash.com/photo-1551721434-8b94ddff0e6d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1001&q=80',
-                    id: 1
-                },
-                {
-                    price: 20000,
-                    title: 'Laptop',
-                    qty: 1,
-                    img: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1951&q=80',
-                    id: 2
-                },
-                {
-                    price: 999,
-                    title: 'Blackberry',
-                    qty: 1,
-                    img: 'https://images.unsplash.com/photo-1474480109237-15a7ca8f0685?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1953&q=80',
-                    id: 3
-                }
-            ]
+            products: [],
+            loading: true
         }
+    }
+
+    componentDidMount(){
+        // firebase
+        //     .firestore()
+        //     .collection('products')
+        //     .get()
+        //     .then((snapshot)=>{
+        //         const products = snapshot.docs.map((doc)=>{
+        //             const product: Product = {
+        //                 id: doc.id,
+        //                 price: doc.data().price,
+        //                 qty: doc.data().qty,
+        //                 title: doc.data().title,
+        //                 img: doc.data().img,
+        //             }
+        //             return product;
+        //         });
+        //         // console.log(products);
+        //         this.setState(
+        //             {
+        //                 products,
+        //                 loading: false
+        //             }
+        //         )
+        //     });
+        firebase
+            .firestore()
+            .collection('products')
+            .onSnapshot((snapshot)=>{
+                const products = snapshot.docs.map((doc)=>{
+                    const product: Product = {
+                        id: doc.id,
+                        price: doc.data().price,
+                        qty: doc.data().qty,
+                        title: doc.data().title,
+                        img: doc.data().img,
+                    }
+                    return product;
+                });
+                // console.log(products);
+                this.setState(
+                    {
+                        products,
+                        loading: false
+                    }
+                )
+            });
+
+
     }
 
     handleIncreaseQuantity: (product:Product) => void = (product) => {
@@ -103,6 +133,7 @@ class App extends Component<{}, State> {
                 handleDecreaseQuantity={this.handleDecreaseQuantity}
                 handleDeleteItem={this.handleDeleteItem}
             />
+            {this.state.loading && <h1>Loading Products...</h1>}
             <div>Total: {this.getCartTotal()}</div>
         </div>
       );

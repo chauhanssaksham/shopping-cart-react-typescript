@@ -12,7 +12,7 @@ interface Product{
     title: string,
     qty: number,
     img: string,
-    id: number
+    id: string
 }
 
 
